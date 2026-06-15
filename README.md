@@ -184,11 +184,12 @@ It is intended for agents working on airfoil/aerofoil generation, wing-section e
 If you use generated airfoils or the pretrained model, also cite the DiffAirfoil AIAA Aviation paper:
 
 ```bibtex
-@inproceedings{dufour2024diffairfoil,
+@inproceedings{wei2024diffairfoil,
   title={DiffAirfoil: An Efficient Novel Airfoil Sampler Based on Latent Space Diffusion Model for Aerodynamic Shape Optimization},
-  author={Dufour, Edouard and Wei, Zhen and Pelletier, Colin and Bauerheim, Michael and Fua, Pascal},
-  booktitle={AIAA Aviation Forum},
-  year={2024}
+  author={Wei, Zhen and Dufour, Edouard R. and Pelletier, Colin and Fua, Pascal and Bauerheim, Michaël},
+  booktitle={AIAA AVIATION FORUM AND ASCEND 2024},
+  year={2024},
+  doi={10.2514/6.2024-3755}
 }
 ```
 
