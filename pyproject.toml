@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "diffgeo"
+version = "0.1.0"
+description = "DiffGeo 2D airfoil latent diffusion release for aerodynamic shape design space exploration."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+  {name = "Zhen Wei"},
+  {name = "Edouard Dufour"},
+  {name = "Colin Pelletier"},
+  {name = "Michael Bauerheim"},
+  {name = "Pascal Fua"},
+]
+keywords = ["airfoil", "diffusion", "latent-space", "shape-optimization", "aerodynamics"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+  "numpy>=1.23",
+  "torch>=2.0,<2.5",
+  "matplotlib>=3.6",
+  "PyYAML>=6.0",
+  "tqdm>=4.64",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+diffgeo-train-autodecoder = "diffgeo.train_autodecoder:main"
+diffgeo-encode-latents = "diffgeo.encode_latents:main"
+diffgeo-train-diffusion = "diffgeo.train_diffusion:main"
+diffgeo-sample-unconditional = "diffgeo.sample_unconditional:main"
+diffgeo-sample-area-guided = "diffgeo.sample_area_guided:main"
+diffgeo-sample-conditional = "diffgeo.sample_conditional:main"
+diffgeo-transform-airfoils = "diffgeo.transform_airfoils:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+.deps/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local caches and temp files
+.cache/
+.pip-cache/
+.tmp/
+.env
+*.log
+
+# Research outputs
+outputs/
+checkpoints/
+wandb/
+runs/
+lightning_logs/
+docs/
+*.ckpt
+*.pt
+*.pth
+*.pkl
+*.npz
+
+# Released pretrained assets are intentionally tracked.
+!pretrained/
+!pretrained/**
+
+# Keep only the compressed UIUC archive and split lists in data/.
+data/uiuc_airfoils/
+!data/uiuc_airfoils.tar.gz
+!data/splits/
+!data/splits/*.txt
+
+# Editors / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db

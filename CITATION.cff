@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+title: "DiffGeo: Aerodynamic Shape Design Space Exploration with Deep Latent Diffusion Model"
+message: "If you use this code, please cite the AIAA Journal paper."
+type: software
+authors:
+  - family-names: Wei
+    given-names: Zhen
+  - family-names: Dufour
+    given-names: Edouard
+  - family-names: Pelletier
+    given-names: Colin
+  - family-names: Bauerheim
+    given-names: Michael
+  - family-names: Fua
+    given-names: Pascal
+repository-code: "https://github.com/TBD/DiffGeo"
+abstract: "Open-source 2D airfoil release for latent-space diffusion over learned geometric design spaces."
+license: MIT
+version: 0.1.0
+date-released: 2026-05-17
+preferred-citation:
+  type: article
+  title: "Aerodynamic Shape Design Space Exploration with Deep Latent Diffusion Model"
+  authors:
+    - family-names: Wei
+      given-names: Zhen
+    - family-names: Dufour
+      given-names: Edouard
+    - family-names: Pelletier
+      given-names: Colin
+    - family-names: Bauerheim
+      given-names: Michael
+    - family-names: Fua
+      given-names: Pascal
+  journal: "AIAA Journal"
+  year: 2026

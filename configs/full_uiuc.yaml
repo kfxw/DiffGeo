@@ -1,0 +1,49 @@
+project_root: .
+seed: 2026
+output_dir: outputs/full_uiuc
+
+data:
+  data_dir: data/uiuc_airfoils/dat
+  train_split: data/splits/train_full_UIUC.txt
+  test_split: data/splits/test_UIUC.txt
+  num_points: 200
+  limit: null
+
+autodecoder:
+  latent_dim: 256
+  hidden_dim: 256
+  num_layers: 4
+  batch_size: 32
+  epochs: 2400
+  learning_rate: 0.0005
+  weight_decay: 0.0
+  latent_l2_weight: 0.000001
+  smoothness_weight: 0.0001
+  save_every: 200
+  checkpoint: outputs/full_uiuc/checkpoints/autodecoder.pt
+
+diffusion:
+  hidden_dim: 512
+  num_layers: 4
+  time_embed_dim: 128
+  timesteps: 1000
+  beta_start: 0.0001
+  beta_end: 0.02
+  batch_size: 128
+  train_steps: 140000
+  learning_rate: 0.0001
+  weight_decay: 0.000001
+  save_every: 5000
+  latent_path: outputs/full_uiuc/latents/uiuc_latents.npz
+  checkpoint: outputs/full_uiuc/checkpoints/diffusion.pt
+
+sampling:
+  num_samples: 64
+  target_area: 0.07
+  target_max_thickness: 0.12
+  guidance_scale: 25.0
+  latent_refinement_steps: 200
+  latent_refinement_lr: 0.1
+  latent_refinement_prior_weight: 0.0001
+  surface_order_weight: 1000.0
+  output_dir: outputs/full_uiuc/samples

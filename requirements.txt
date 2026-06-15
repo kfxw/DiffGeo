@@ -1,0 +1,6 @@
+numpy>=1.23
+matplotlib>=3.6
+PyYAML>=6.0
+tqdm>=4.64
+torch>=2.0,<2.5
+pytest>=7.0

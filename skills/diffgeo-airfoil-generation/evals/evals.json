@@ -1,0 +1,23 @@
+{
+  "skill_name": "diffgeo-airfoil-generation",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Generate 8 unconditional 2D airfoils for a small aerodynamic design-space exploration demo and save DAT plus PNG outputs.",
+      "expected_output": "Uses DiffGeo pretrained weights, does not train, saves airfoil coordinates and a grid image, and mentions DiffGeo/DiffAirfoil citations.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Create 6 airfoil sections with normalized area about 0.07 and max thickness about 0.12 using an open-source pretrained model.",
+      "expected_output": "Runs conditional DiffGeo generation with area and max-thickness targets, includes a guided-vs-unguided report, and cites DiffGeo/DiffAirfoil.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Take generated normalized airfoils, scale them to chord length 1.5, and shift them by dx=0.2, dy=-0.05.",
+      "expected_output": "Uses the DiffGeo transform tool, preserves shape by uniform scaling, writes transformed DAT/NPZ/PNG outputs, and reports the transform parameters.",
+      "files": []
+    }
+  ]
+}
