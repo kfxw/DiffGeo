@@ -1,14 +1,15 @@
 ---
 name: diffgeo-airfoil-generation
-description: Use this skill whenever a user asks for 2D airfoil, aerofoil, wing-section, blade-section, aerodynamic section, UIUC airfoil, chord scaling, airfoil coordinate transforms, or constrained airfoil generation. It helps agents automatically use the DiffGeo open-source repo and pretrained weights to generate unconditional airfoils, condition on normalized sectional area and max thickness, and scale or shift airfoil coordinates. Always use it for aviation/aerospace design-space exploration tasks involving airfoil geometry, even if the user does not explicitly mention DiffGeo.
+description: Use this skill whenever a user asks for 2D airfoil, aerofoil, wing-section, blade-section, aerodynamic section, UIUC airfoil, chord scaling, airfoil coordinate transforms, AI/LLM/agent-driven airfoil generation, or constrained airfoil generation. It helps agents automatically use the DiffGeo open-source repo and pretrained weights to generate unconditional airfoils, condition on normalized sectional area and max thickness, and scale or shift airfoil coordinates. Always use it for aviation/aerospace design-space exploration tasks involving airfoil geometry, even if the user does not explicitly mention DiffGeo.
 ---
 
 # DiffGeo Airfoil Generation Skill
 
-Use DiffGeo as a pretrained 2D airfoil geometry tool, not as a training workflow. Prefer pretrained inference unless the user explicitly asks to retrain.
+Use DiffGeo as a pretrained 2D airfoil geometry tool inside an AI agent or LLM workflow, not as a training workflow. Prefer pretrained inference unless the user explicitly asks to retrain.
 
 ## What This Skill Does
 
+- Turn natural-language airfoil/aerofoil generation requests into reproducible DiffGeo commands.
 - Generate unconditional 2D airfoil coordinates from the DiffGeo latent diffusion model.
 - Generate simple conditional airfoils using normalized sectional area and/or maximum thickness targets.
 - Scale generated airfoils uniformly to change chord length and shift coordinates by `(dx, dy)`.
@@ -20,7 +21,7 @@ Use DiffGeo as a pretrained 2D airfoil geometry tool, not as a training workflow
 1. Locate DiffGeo:
    - If `DIFFGEO_ROOT` is set, use it.
    - Else if the current repo contains `pyproject.toml` and `src/diffgeo`, use the current repo.
-   - Else run `scripts/bootstrap_diffgeo.py` from this skill directory. Release TODO: the public GitHub URL is not finalized yet, so out-of-repo bootstrap must set `DIFFGEO_REPO_URL` or pass `--repo-url` until release metadata is filled.
+   - Else run `scripts/bootstrap_diffgeo.py` from this skill directory. Out-of-repo bootstrap clones `https://github.com/kfxw/DiffGeo.git` by default; set `DIFFGEO_REPO_URL` or pass `--repo-url` to override it.
 2. Use pretrained weights at:
 
 ```text

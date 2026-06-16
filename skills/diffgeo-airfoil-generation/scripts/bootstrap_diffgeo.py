@@ -6,8 +6,7 @@ import os
 import subprocess
 from pathlib import Path
 
-# TODO(release): set this once the public DiffGeo repository URL is assigned.
-DEFAULT_REPO_URL = ""
+DEFAULT_REPO_URL = "https://github.com/kfxw/DiffGeo.git"
 
 
 def looks_like_diffgeo(path: Path) -> bool:
@@ -33,7 +32,7 @@ def main() -> None:
     if not target.exists():
         if not args.repo_url:
             raise SystemExit(
-                "Release TODO: public DiffGeo repository URL is not set yet. "
+                "DiffGeo repository URL is not set. "
                 "Set DIFFGEO_REPO_URL or pass --repo-url before cloning."
             )
         target.parent.mkdir(parents=True, exist_ok=True)

@@ -1,41 +1,116 @@
+<div align="center">
+
 # DiffGeo
 
-This repository is the 2D airfoil open-source release for **Aerodynamic Shape Design Space Exploration with Deep Latent Diffusion Model** (AIAA Journal, 2026).
+**Agent-ready 2D airfoil/aerofoil generation with latent diffusion**
 
-It provides a compact Python package for:
+Use an AI agent or LLM workflow to generate airfoil, aerofoil, wing-section, and blade-section geometries with a reproducible Python package, a bundled agent skill, pretrained UIUC checkpoints, and full training scripts.
 
-- training a 2D airfoil auto-decoder on the UIUC full training split;
-- exporting learned latent codes;
-- training a latent-space diffusion model;
-- generating unconditional airfoils;
-- generating airfoils with normalized area and max-thickness targets;
-- scaling and shifting generated airfoil coordinates.
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.x-EE4C2C?style=flat-square&logo=pytorch&logoColor=white)](https://pytorch.org/)
+[![Agent Skill](https://img.shields.io/badge/Agent%20Skill-Included-2E7D59?style=flat-square)](skills/diffgeo-airfoil-generation/SKILL.md)
+[![Pretrained](https://img.shields.io/badge/Pretrained-UIUC%20full-8A5A1F?style=flat-square)](pretrained/uiuc_airfoil_full_v1)
+[![License](https://img.shields.io/badge/License-MIT-111827?style=flat-square)](LICENSE)
 
-## Repository Layout
+[English](./README.md) | [简体中文](./README.zh-CN.md)
+
+<img src=".github/assets/diffgeo-readme-hero.png" alt="DiffGeo AI agent airfoil generation with unconditional and area thickness guided aerofoil samples" width="100%"/>
+
+</div>
+
+## Why DiffGeo
+
+DiffGeo is the 2D airfoil open-source release for **Aerodynamic Shape Design Space Exploration with Deep Latent Diffusion Model** (AIAA Journal, 2026). It is the journal extension of the conference paper **DiffAirfoil: An Efficient Novel Airfoil Sampler Based on Latent Space Diffusion Model for Aerodynamic Shape Optimization** (AIAA Aviation Forum, 2024). The release is designed for both normal research-code use and agent-driven geometry generation.
+
+The repository provides:
+
+- a generic agent skill for AI agents and LLM workflows that need airfoil generation;
+- pretrained full-UIUC checkpoints for immediate unconditional or constrained sampling;
+- Python CLIs for generation, coordinate transforms, training, latent export, and reproduction;
+- normalized geometry guidance for sectional area and maximum thickness targets;
+- `.npz`, `.dat`, `.png`, and report artifacts for downstream aerodynamic workflows.
+
+DiffGeo does not ask the LLM to invent coordinates directly. The agent reads the skill instructions, calls the reproducible DiffGeo tools, and lets the trained latent diffusion model generate the geometry.
+
+## Agent Skill Quickstart
+
+The bundled skill lives at:
 
 ```text
-DiffGeo/
-├── configs/                         # Full UIUC experiment config
-├── data/
-│   ├── uiuc_airfoils.tar.gz          # UIUC coordinate archive
-│   └── splits/                       # train_full_UIUC and test_UIUC split lists
-├── pretrained/uiuc_airfoil_full_v1/  # Released full-UIUC checkpoint bundle
-├── scripts/                          # Thin CLI wrappers
-├── skills/diffgeo-airfoil-generation/
-├── src/diffgeo/                      # Package implementation
-└── tests/                            # Unit and data-loading tests
+skills/diffgeo-airfoil-generation/SKILL.md
 ```
 
-## Installation
+Use it when an AI agent, LLM coding assistant, or autonomous engineering workflow needs to generate 2D airfoils/aerofoils, wing sections, blade sections, or simple area/thickness constrained geometries.
 
-From the repository root:
+Example prompt for an agent:
+
+```text
+Use the DiffGeo airfoil-generation skill from this repository.
+Generate 16 unit-chord airfoils with target area 0.07 and max thickness 0.12,
+then export .dat files for downstream aerodynamic analysis.
+```
+
+What the skill routes the agent to do:
+
+<img src=".github/assets/diffgeo-agent-workflow.png" alt="AI agent workflow for LLM driven airfoil generation using the DiffGeo skill" width="100%"/>
+
+For agent runtimes that support repo-local skills or reusable tool instructions, register or point the runtime at `skills/diffgeo-airfoil-generation/`. For simpler assistants, paste the contents of `SKILL.md` into the task context and set `DIFFGEO_ROOT` to this repository.
+
+## Python Quickstart
+
+Clone and install from the repository root:
 
 ```bash
+git clone https://github.com/kfxw/DiffGeo.git
+cd DiffGeo
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -e ".[dev]"
 ```
+
+Extract the bundled UIUC coordinate archive:
+
+```bash
+tar -xzf data/uiuc_airfoils.tar.gz -C data
+```
+
+Generate airfoils with normalized geometry targets:
+
+```bash
+diffgeo-sample-conditional \
+  --config configs/full_uiuc.yaml \
+  --pretrained-dir pretrained/uiuc_airfoil_full_v1 \
+  --target-area 0.07 \
+  --target-max-thickness 0.12 \
+  --num-samples 16 \
+  --output-dir outputs/pretrained_conditional
+```
+
+Generate unconditional samples:
+
+```bash
+diffgeo-sample-unconditional \
+  --config configs/full_uiuc.yaml \
+  --pretrained-dir pretrained/uiuc_airfoil_full_v1 \
+  --num-samples 16 \
+  --output-dir outputs/pretrained_unconditional
+```
+
+Scale or shift generated coordinates:
+
+```bash
+diffgeo-transform-airfoils \
+  --input outputs/pretrained_conditional/conditional_samples.npz \
+  --chord-scale 1.5 \
+  --shift-x 0.25 \
+  --shift-y -0.05 \
+  --output-dir outputs/pretrained_transformed
+```
+
+Area and max-thickness targets use the normalized unit-chord coordinate system. `chord-scale` applies uniform scaling, then `shift-x` and `shift-y` translate all coordinates.
+
+## Installation Notes
 
 Some minimal Debian/Ubuntu containers do not include `ensurepip`, so `python -m venv` may require `apt install python3.10-venv`. If you cannot modify the image, install dependencies into a project-local target:
 
@@ -49,6 +124,22 @@ export PYTHONPATH=$PWD/src:$PWD/.deps
 ```
 
 For GPU training, install a PyTorch wheel compatible with the host NVIDIA driver.
+
+## Repository Layout
+
+```text
+DiffGeo/
+├── .github/assets/                 # README display assets
+├── configs/                        # Full UIUC experiment config
+├── data/
+│   ├── uiuc_airfoils.tar.gz         # UIUC coordinate archive
+│   └── splits/                      # train_full_UIUC and test_UIUC split lists
+├── pretrained/uiuc_airfoil_full_v1/ # Released full-UIUC checkpoint bundle
+├── scripts/                         # Thin CLI wrappers
+├── skills/diffgeo-airfoil-generation/
+├── src/diffgeo/                     # Package implementation
+└── tests/                           # Unit and data-loading tests
+```
 
 ## Data
 
@@ -79,7 +170,7 @@ data/splits/test_UIUC.txt
 
 The bundled UIUC coordinates are included for reproducibility of the 2D airfoil experiments. Respect the upstream UIUC airfoil database terms when redistributing derived packages.
 
-## Pretrained Airfoil Generation
+## Pretrained Bundle
 
 The repository includes a full-UIUC pretrained checkpoint bundle:
 
@@ -87,40 +178,23 @@ The repository includes a full-UIUC pretrained checkpoint bundle:
 pretrained/uiuc_airfoil_full_v1
 ```
 
-Generate unconditional airfoils without retraining:
+Expected generation artifacts include:
 
-```bash
-diffgeo-sample-unconditional \
-  --config configs/full_uiuc.yaml \
-  --pretrained-dir pretrained/uiuc_airfoil_full_v1 \
-  --num-samples 16 \
-  --output-dir outputs/pretrained_unconditional
+```text
+*_samples.npz
+*_grid.png
+*_report.txt
+*_dat/*.dat
 ```
 
-Generate airfoils with normalized geometry targets:
+Transform artifacts include:
 
-```bash
-diffgeo-sample-conditional \
-  --config configs/full_uiuc.yaml \
-  --pretrained-dir pretrained/uiuc_airfoil_full_v1 \
-  --target-area 0.07 \
-  --target-max-thickness 0.12 \
-  --num-samples 16 \
-  --output-dir outputs/pretrained_conditional
+```text
+transformed_airfoils.npz
+transformed_grid.png
+transformed_transform_report.txt
+transformed_dat/*.dat
 ```
-
-Scale and shift generated coordinates as a post-processing step:
-
-```bash
-diffgeo-transform-airfoils \
-  --input outputs/pretrained_conditional/conditional_samples.npz \
-  --chord-scale 1.5 \
-  --shift-x 0.25 \
-  --shift-y -0.05 \
-  --output-dir outputs/pretrained_transformed
-```
-
-Area and max-thickness targets use the normalized unit-chord coordinate system. `chord-scale` applies uniform scaling, then `shift-x` and `shift-y` translate all coordinates.
 
 ## Full UIUC Reproduction
 
@@ -160,16 +234,6 @@ After extracting `data/uiuc_airfoils.tar.gz`, run:
 pytest -q
 ```
 
-## Agent Skill
-
-The agent-facing skill is located at:
-
-```text
-skills/diffgeo-airfoil-generation/SKILL.md
-```
-
-It is intended for agents working on airfoil/aerofoil generation, wing-section exploration, chord scaling, coordinate transforms, and simple area/thickness constrained geometry tasks. It uses the pretrained checkpoint bundle by default.
-
 ## Citation
 
 ```bibtex
@@ -181,7 +245,7 @@ It is intended for agents working on airfoil/aerofoil generation, wing-section e
 }
 ```
 
-If you use generated airfoils or the pretrained model, also cite the DiffAirfoil AIAA Aviation paper:
+If you use this work for airfoil-related applications, research, or development, please also cite the DiffGeo conference-version paper, **DiffAirfoil**:
 
 ```bibtex
 @inproceedings{wei2024diffairfoil,

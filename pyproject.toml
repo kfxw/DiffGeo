@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "diffgeo"
 version = "0.1.0"
-description = "DiffGeo 2D airfoil latent diffusion release for aerodynamic shape design space exploration."
+description = "Agent-ready 2D airfoil/aerofoil generation with latent diffusion for aerodynamic shape design space exploration."
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
@@ -16,7 +16,22 @@ authors = [
   {name = "Michael Bauerheim"},
   {name = "Pascal Fua"},
 ]
-keywords = ["airfoil", "diffusion", "latent-space", "shape-optimization", "aerodynamics"]
+keywords = [
+  "airfoil",
+  "airfoil-generation",
+  "aerofoil",
+  "ai-agent",
+  "llm",
+  "diffusion",
+  "diffusion-model",
+  "latent-space",
+  "geometry-generation",
+  "wing-section",
+  "blade-section",
+  "shape-optimization",
+  "aerodynamics",
+  "aerodynamic-design",
+]
 classifiers = [
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.10",

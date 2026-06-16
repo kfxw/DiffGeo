@@ -13,8 +13,8 @@ authors:
     given-names: Michael
   - family-names: Fua
     given-names: Pascal
-repository-code: "https://github.com/TBD/DiffGeo"
-abstract: "Open-source 2D airfoil release for latent-space diffusion over learned geometric design spaces."
+repository-code: "https://github.com/kfxw/DiffGeo"
+abstract: "Agent-ready open-source 2D airfoil/aerofoil generation release for latent-space diffusion over learned geometric design spaces."
 license: MIT
 version: 0.1.0
 date-released: 2026-05-17
