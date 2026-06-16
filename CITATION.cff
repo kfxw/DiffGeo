@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 title: "DiffGeo: Aerodynamic Shape Design Space Exploration with Deep Latent Diffusion Model"
-message: "If you use this code, please cite the AIAA Journal paper."
+message: "If you use this repository, please cite both the DiffGeo AIAA Journal paper and the DiffAirfoil AIAA Aviation Forum paper."
 type: software
 authors:
   - family-names: Wei
@@ -34,3 +34,21 @@ preferred-citation:
       given-names: Pascal
   journal: "AIAA Journal"
   year: 2026
+references:
+  - type: conference-paper
+    title: "DiffAirfoil: An Efficient Novel Airfoil Sampler Based on Latent Space Diffusion Model for Aerodynamic Shape Optimization"
+    authors:
+      - family-names: Wei
+        given-names: Zhen
+      - family-names: Dufour
+        given-names: Edouard R.
+      - family-names: Pelletier
+        given-names: Colin
+      - family-names: Fua
+        given-names: Pascal
+      - family-names: Bauerheim
+        given-names: Michaël
+    conference:
+      name: "AIAA AVIATION FORUM AND ASCEND 2024"
+    year: 2024
+    doi: "10.2514/6.2024-3755"
